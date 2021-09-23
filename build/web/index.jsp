@@ -5,6 +5,10 @@
 --%>
 <%@page import="Modelo.Marcas"%>
 <%@page import="java.util.HashMap"%>
+<%@page import="Modelo.Productos"%>
+<%@page import="javax.swing.table.DefaultTableModel"%>
+
+
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -48,9 +52,47 @@
                  <br>
                  <button name="btn_agregar" id="btn_agregar" value="agregar" class="btn btn-primary">Agregar</button>
             
-            
             </form>
-                
+                         
+                         
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Producto</th>
+                        <th>Marca</th>
+                        <th>Descripcion</th>
+                        <th>Precio Costo</th>
+                        <th>Precio Venta</th>
+                        <th>Existencia</th>
+                      </tr>
+                    </thead>
+                    
+                    <tbody id="tbl_empleados">
+                      <%
+                      
+                      Productos producto = new Productos();
+                      DefaultTableModel tabla = new DefaultTableModel();
+                      tabla = producto.leer();
+                      for(int t=0;t<tabla.getRowCount();t++){
+                      
+                        out.println("<tr data-id = " + tabla.getValueAt(t, 0) + " data-id_m = " + tabla.getValueAt(t, 3) + ">");
+                        out.println("<td>" + tabla.getValueAt(t, 1) + "</td>");
+                        out.println("<td>" + tabla.getValueAt(t, 2) + "</td>");
+                        out.println("<td>" + tabla.getValueAt(t, 4) + "</td>");
+                        out.println("<td>" + tabla.getValueAt(t, 5) + "</td>");
+                        out.println("<td>" + tabla.getValueAt(t, 6) + "</td>");
+                        out.println("<td>" + tabla.getValueAt(t, 7) + "</td>");
+                        
+                        out.println("</tr>");
+                      }
+
+                      %>
+                    </tbody>
+                </table>
+                         
+                         
+                         
+                         
         </div>
     </body>
 </html>

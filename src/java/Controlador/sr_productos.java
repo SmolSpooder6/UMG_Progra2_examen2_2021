@@ -45,8 +45,7 @@ public class sr_productos extends HttpServlet {
                 producto = new Productos(request.getParameter("txt_producto"),Integer.valueOf(request.getParameter("drop_marca")),request.getParameter("txt_descripcion"),Float.valueOf(request.getParameter("txt_precio_costo")),Float.valueOf(request.getParameter("txt_precio_venta")),Integer.valueOf(request.getParameter("txt_existencia")));
 
                 if (producto.agregar() > 0){
-                    out.println("<h1>Ingreso Exitoso...</h1>");
-                    out.println("<a href = 'index.jsp'>Regresar</a>");
+                    response.sendRedirect("index.jsp");
 
                 }
                 else{

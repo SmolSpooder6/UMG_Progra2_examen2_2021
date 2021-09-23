@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.sql.PreparedStatement;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -86,7 +87,38 @@ public class Productos {
     }
     
     
-    
+    public DefaultTableModel leer(){
+        DefaultTableModel tabla = new DefaultTableModel();
+        try{
+            cn= new Conexion();
+            cn.abrir_conexion();
+            String query = "SELECT p.idProductos AS id,p.Producto,m.marca,m.idMarca,p.Descripcion,p.precio_costo,p.precio_venta,p.existencia FROM productos as p INNER JOIN marca AS m ON p.idMarca = m.idMarca;";
+            ResultSet consulta = cn.conexion_db.createStatement().executeQuery(query);
+            String encabezado[] = {"id", "Producto", "Marca", "Id Marca", "Descripcion", "Precio Costo", "Precio Venta", "Existencia"  };
+            tabla.setColumnIdentifiers(encabezado);
+            String datos[] = new String[8];
+            while(consulta.next()){
+                datos[0] = consulta.getString("id");
+                datos[1] = consulta.getString("Producto");
+                datos[2] = consulta.getString("marca");
+                datos[3] = consulta.getString("idMarca");
+                datos[4] = consulta.getString("Descripcion");
+                datos[5] = consulta.getString("precio_costo");
+                datos[6] = consulta.getString("precio_venta");
+                datos[7] = consulta.getString("existencia");
+                
+                tabla.addRow(datos);
+            }
+            
+            
+            cn.cerrar_conexion();
+        }
+        catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        
+        return tabla;
+    }
     public int agregar(){
         int retorno = 0;
         try{
